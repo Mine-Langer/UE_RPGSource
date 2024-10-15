@@ -65,6 +65,10 @@ public:
 	FGameplayAttributeData Damage;
 	ATTRIBUTE_ACCESSORS(UHLAttributeSet, Damage);
 
+	UPROPERTY(BlueprintReadOnly, Category="Armor")
+	FGameplayAttributeData Armor;
+	ATTRIBUTE_ACCESSORS(UHLAttributeSet, Armor);
+
 	UPROPERTY(BlueprintReadOnly, Category="Speed", ReplicatedUsing=OnRep_Speed)
 	FGameplayAttributeData Speed;
 	ATTRIBUTE_ACCESSORS(UHLAttributeSet, Speed);

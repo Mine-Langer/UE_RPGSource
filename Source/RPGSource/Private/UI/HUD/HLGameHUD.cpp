@@ -2,6 +2,10 @@
 
 
 #include "UI/HUD/HLGameHUD.h"
+
+#include "GamePlay/HLGameMode.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/HLPlayerState.h"
 #include "UI/Widgets/HLGameHUDWidget.h"
 
 AHLGameHUD::AHLGameHUD()
@@ -15,10 +19,18 @@ void AHLGameHUD::BeginPlay()
 	
 	if (GEngine && GEngine->GameViewport)
 	{
-		UHLGameHUDWidget* GameHUD = CreateWidget<UHLGameHUDWidget>(GetWorld()->GetGameInstance(), GameHUDWidget);
+		GameHUD = CreateWidget<UHLGameHUDWidget>(GetWorld()->GetGameInstance(), GameHUDWidget);
 		if (GameHUD)
 		{
 			GameHUD->AddToViewport();
 		}
 	}
+
+	AHLGameMode* GM = Cast<AHLGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (!GM)
+		return;
+
+	GM->InitGameplayModule();
+
+	GM->SPState->UpdateStateWidget.BindUObject(GameHUD, &UHLGameHUDWidget::UpdateStateWidget);
 }

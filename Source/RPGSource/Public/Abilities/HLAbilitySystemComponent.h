@@ -13,15 +13,14 @@ class RPGSOURCE_API UHLAbilitySystemComponent : public UAbilitySystemComponent
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
 	UHLAbilitySystemComponent();
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	virtual void AbilityLocalInputPressed(int32 InputID) override;
+	
 public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-	                           FActorComponentTickFunction* ThisTickFunction) override;
+	bool bCharacterAbilitiesGiven = false;
+	bool bStartupEffectApplied = false;
 };

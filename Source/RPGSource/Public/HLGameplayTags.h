@@ -11,6 +11,12 @@ public:
 	FGameplayTag InputTag_Sprint;
 	FGameplayTag InputTag_Jump;
 	FGameplayTag InputTag_Fire;
+
+	FGameplayTag DataDamage;
+
+
+	FGameplayTag EffectDamageCanHeadShot;
+	FGameplayTag EffectDamageHeadShot;
 	
 private:
 	static FHLGameplayTags Instance;

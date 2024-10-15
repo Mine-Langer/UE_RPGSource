@@ -27,5 +27,5 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = UI, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> GameHUDWidget;
 
-	// UHLGameHUDWidget* GameHUD;
+	UHLGameHUDWidget* GameHUD = nullptr;
 };

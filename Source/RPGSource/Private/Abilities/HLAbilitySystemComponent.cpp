@@ -3,34 +3,57 @@
 
 #include "Abilities/HLAbilitySystemComponent.h"
 
+#include "Abilities/HLGameplayAbility.h"
 
-// Sets default values for this component's properties
+
 UHLAbilitySystemComponent::UHLAbilitySystemComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
 }
 
 
-// Called when the game starts
 void UHLAbilitySystemComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
 }
 
-
-// Called every frame
-void UHLAbilitySystemComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                              FActorComponentTickFunction* ThisTickFunction)
+void UHLAbilitySystemComponent::AbilityLocalInputPressed(int32 InputID)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::AbilityLocalInputPressed(InputID);
 
-	// ...
+	if (IsGenericConfirmInputBound(InputID))
+	{
+		LocalInputConfirm();
+		return;
+	}
+
+	if (IsGenericCancelInputBound(InputID))
+	{
+		LocalInputCancel();
+		return;
+	}
+
+	ABILITYLIST_SCOPE_LOCK();
+	for (FGameplayAbilitySpec& Spec : ActivatableAbilities.Items)
+	{
+		if (Spec.InputID == InputID && Spec.Ability)
+		{
+			if (Spec.IsActive())
+			{
+				AbilitySpecInputPressed(Spec);
+			}
+			else
+			{
+				UHLGameplayAbility* GA = Cast<UHLGameplayAbility>(Spec.Ability);
+				if (GA && GA->bActiveOnInput)
+				{
+					TryActivateAbility(Spec.Handle);
+				}
+			}
+		}
+	}
 }
 
