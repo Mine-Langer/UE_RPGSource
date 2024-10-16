@@ -3,6 +3,7 @@
 
 #include "Abilities/AbilityInst/HLGA_AttackFire.h"
 
+#include "Abilities/HLAbilitySystemComponent.h"
 #include "Weapons/HLWeapon.h"
 
 UHLGA_AttackFire::UHLGA_AttackFire()
@@ -25,6 +26,7 @@ bool UHLGA_AttackFire::Initialize()
 	if (!SourceWeapon)
 		SourceWeapon = Cast<AHLWeapon>(GetCurrentSourceObject());
 
+	Cast<UHLAbilitySystemComponent>(GetAbilitySystemComponentFromActorInfo())->FindAbilitySpecHandleForClass()
 
 	return true;
 }

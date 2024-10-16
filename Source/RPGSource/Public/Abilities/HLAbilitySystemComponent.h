@@ -15,6 +15,8 @@ class RPGSOURCE_API UHLAbilitySystemComponent : public UAbilitySystemComponent
 public:
 	UHLAbilitySystemComponent();
 
+	FGameplayAbilitySpecHandle FindAbilitySpecHandleForClass(TSubclassOf<UGameplayAbility> AbilityClass, UObject* OptionalSourceObject=nullptr);
+	
 protected:
 	virtual void BeginPlay() override;
 
